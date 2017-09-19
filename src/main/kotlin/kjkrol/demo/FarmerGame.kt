@@ -1,10 +1,13 @@
 package kjkrol.demo
 
+import javafx.animation.RotateTransition
+import javafx.animation.ScaleTransition
 import javafx.application.Application
 import javafx.scene.Group
 import javafx.scene.Scene
 import javafx.scene.effect.Glow
 import javafx.scene.paint.Color
+import javafx.scene.shape.Circle
 import javafx.scene.shape.Line
 import javafx.scene.shape.LineTo
 import javafx.scene.shape.MoveTo
@@ -16,6 +19,7 @@ import javafx.scene.transform.Rotate
 import javafx.scene.transform.Scale
 import javafx.scene.transform.Translate
 import javafx.stage.Stage
+import javafx.util.Duration
 
 fun main(args: Array<String>) {
     Application.launch(FarmerGame::class.java, *args)
@@ -40,16 +44,27 @@ class FarmerGame : Application() {
         val line = createLine()
         val text = createText()
         val path = createPath()
+        val ciricle = createCircle()
         val rectanle = createRectangle()
         text.effect = createGlowEffect()
         rectanle.transforms.addAll(
                 createRotationTransformation(),
                 createScaleTransformation(),
                 createTranslationTransformation())
+
+        val rotateTransition = createRotateTransition()
+        rotateTransition.node = path
+        rotateTransition.play()
+
+        val scaleTransition = createScaleTransition()
+        scaleTransition.node = ciricle
+        scaleTransition.play()
+
         group.children.add(line)
         group.children.add(text)
         group.children.add(path)
         group.children.add(rectanle)
+        group.children.add(ciricle)
         return group
     }
 
@@ -120,6 +135,35 @@ class FarmerGame : Application() {
         scale.pivotX = 300.0
         scale.pivotY = 135.0
         return scale
+    }
+
+    private fun createRotateTransition(): RotateTransition {
+        val rotateTransition = RotateTransition()
+        rotateTransition.duration = Duration.millis(4000.0)
+        rotateTransition.byAngle = 360.0
+        rotateTransition.cycleCount = 1
+        rotateTransition.isAutoReverse = false
+        return rotateTransition
+    }
+
+    private fun createCircle(): Circle {
+        val circle = Circle()
+        circle.centerX = 450.0
+        circle.centerY = 60.0
+        circle.radius = 30.0
+        circle.fill = Color.BROWN
+        circle.strokeWidth = 20.0
+        return circle
+    }
+
+    private fun createScaleTransition(): ScaleTransition {
+        val scaleTransition = ScaleTransition()
+        scaleTransition.duration = Duration.millis(3000.0)
+        scaleTransition.byX = 1.2
+        scaleTransition.byY = 1.2
+        scaleTransition.cycleCount = 2
+        scaleTransition.isAutoReverse = true
+        return scaleTransition
     }
 
 }
