@@ -14,17 +14,26 @@ class SpriteAnimation(private val imageView: ImageView,
                       private val offsetX: Double, private val offsetY: Double,
                       private val width: Double, private val height: Double) : Transition() {
 
+    private val frames: Array<Rectangle2D>
+
     init {
         cycleDuration = duration
         cycleCount = Animation.INDEFINITE
         interpolator = Interpolator.LINEAR
-        imageView.viewport = Rectangle2D(offsetX, offsetY, width, height)
+        imageView.fitHeight = height
+        imageView.fitWidth = width
+        frames = initFrames()
     }
 
     override fun interpolate(frac: Double) {
-        val index: Int = Math.min(Math.floor(frac * count).toInt(), count - 1)
-        val x: Double = index % columns * width + offsetX
-        val y: Double = index / columns * height + offsetY
-        imageView.viewport = Rectangle2D(x, y, width, height)
+        val index: Int = Math.round((count - 1) * frac).toInt()
+        imageView.viewport = frames[index]
     }
+
+    private fun initFrames(): Array<Rectangle2D> = Array(count, {
+        val xPos: Double = it % columns * width + offsetX
+        val yPos: Double = it / columns * height + offsetY
+        Rectangle2D(xPos, yPos, width, height)
+    })
+
 }

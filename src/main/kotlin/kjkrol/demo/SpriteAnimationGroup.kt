@@ -1,6 +1,5 @@
 package kjkrol.demo
 
-import javafx.geometry.Rectangle2D
 import javafx.scene.Group
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
@@ -18,7 +17,6 @@ class SpriteAnimationGroup : Group() {
 
     init {
         val imageView = ImageView(IMAGE)
-        imageView.viewport = Rectangle2D(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT)
         val animation = SpriteAnimation(
                 imageView,
                 Duration.millis(500.0),

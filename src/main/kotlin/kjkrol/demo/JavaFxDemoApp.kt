@@ -22,7 +22,7 @@ class JavaFxDemoApp : Application() {
         val rootNode = SpriteAnimationGroup()
         val scene = Scene(rootNode)
 //        val scene = Scene(rootNode, 600.0, 300.0)
-//        scene.fill = Color.DARKSEAGREEN
+        scene.fill = Color.DARKSEAGREEN
         return scene
     }
 
